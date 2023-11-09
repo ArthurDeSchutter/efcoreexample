@@ -1,12 +1,12 @@
 ﻿using efcoreexample.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
+
 
 namespace efcoreexample.Controllers
 {
-    public class CustomerController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class CustomerController : ControllerBase
     {
         private readonly MyWebShopContext dbContext;
         public CustomerController() {
@@ -14,23 +14,24 @@ namespace efcoreexample.Controllers
         }
 
         // GET: CustomerController
-        public List<Customer> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
-            return dbContext.Customers.ToList();
+            var result = dbContext.Customers.ToList();
+            return Ok(result);
         }
 
         // GET: CustomerController/Details/5
-        public Customer Details(int id)
+        [HttpGet("Details")]
+        public IActionResult Details(int id)
         {
-            return dbContext.Customers.Where(x => x.Id == id).SingleOrDefault();
+            var result =  dbContext.Customers.Where(x => x.Id == id).SingleOrDefault();
+            return Ok(result);
         }
-
-        // GET: CustomerController/Create
 
         // POST: CustomerController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public HttpStatusCode Create(Customer customer)
+        public IActionResult Create(Customer customer)
         {
             var newcustomer = new Customer();
             newcustomer.Name = customer.Name;
@@ -38,9 +39,10 @@ namespace efcoreexample.Controllers
 
             dbContext.Customers.Add(newcustomer);
             dbContext.SaveChanges();
-            return HttpStatusCode.Created;
+            return Ok();
 
         }
+
 
     }
 }

@@ -1,33 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace efcoreexample.Controllers
 {
-    public class ProductController : Controller
+
+    [ApiController]
+    [Route("[controller]")]
+    public class ProductController : ControllerBase
     {
         //try to make this controller
+
         // GET: ProductController
-        public ActionResult Index()
+        [HttpGet]
+        public IActionResult Index()
         {
-            return View();
+            return Ok();
         }
 
         // GET: ProductController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("Details")]
+        public IActionResult Details(int id)
         {
-            return View();
+            return Ok();
         }
 
         // GET: ProductController/Create
-        public ActionResult Create()
+        [HttpGet("Create")]
+        public IActionResult Create()
         {
-            return View();
+            return Ok();
         }
 
         // POST: ProductController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(IFormCollection collection)
         {
             try
             {
@@ -35,20 +40,21 @@ namespace efcoreexample.Controllers
             }
             catch
             {
-                return View();
+                return Ok();
             }
         }
 
         // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet("Edit")]
+        public IActionResult Edit(int id)
         {
-            return View();
+            return Ok();
         }
 
         // POST: ProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpPost("Edit")]
+
+        public IActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -56,29 +62,16 @@ namespace efcoreexample.Controllers
             }
             catch
             {
-                return View();
+                return Ok();
             }
         }
 
         // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet("Delete")]
+        public IActionResult Delete(int id)
         {
-            return View();
+            return Ok();
         }
 
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

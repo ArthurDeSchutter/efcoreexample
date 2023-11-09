@@ -5,6 +5,9 @@ using System.Net;
 
 namespace efcoreexample.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
+
     public class OrderController : Controller
     {
         private readonly MyWebShopContext dbContext;
@@ -14,12 +17,14 @@ namespace efcoreexample.Controllers
         }
 
         // GET: OrderController
+        [HttpGet]
         public List<Order> Index()
         {
             return dbContext.Orders.ToList();
         }
 
         // GET: OrderController/Details/5
+        [HttpGet("Details")]
         public Order Details(int id)
         {
             return dbContext.Orders.Where(x => x.Id == id).SingleOrDefault();
@@ -28,7 +33,6 @@ namespace efcoreexample.Controllers
 
         // POST: OrderController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public HttpStatusCode Create(Order order)
         {
             var neworder =  new Order();
